@@ -41,7 +41,7 @@ end
 # The function to lookup stock price for a particular symbol.
 # Looks up the 'stock-price' microservice and returns JSON doc
 def lookup_stock(stock)
-  address, port = lookup_service('stock-price')
+  address, port = lookup_service('stocks')
   uri = URI.parse(URI.encode("http://#{address}:#{port}/stock/#{stock}"))
   res = Net::HTTP.get_response(uri)
   res.body if res.is_a?(Net::HTTPSuccess)
