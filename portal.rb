@@ -5,6 +5,7 @@ require 'json'
 require 'resolv'
 
 set :bind, '0.0.0.0'
+set :port, 80
 
 # The main web page.
 get '/' do
