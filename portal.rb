@@ -50,7 +50,8 @@ end
 # Function to return an IP address and port number for a given service name
 # Assumes Consul agent is running locally and acting as the default DNS resolver
 def lookup_service(service_name)
+  service_name = servicename + ".apps.gureu.me"
   resolver = Resolv::DNS.open
-  record = resolver.getresource(service_name, Resolv::DNS::Resource::IN::SRV)
+  record = resolver.getresource(service_name, Resolv::DNS::Resource::IN::A)
   return resolver.getaddress(record.target), record.port
 end
