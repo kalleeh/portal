@@ -52,6 +52,6 @@ end
 def lookup_service(service_name)
   service_name = service_name + ".apps.gureu.me"
   resolver = Resolv::DNS.open
-  record = resolver.getresource(service_name, Resolv::DNS::Resource::IN::A)
+  record = resolver.getresource(service_name, Resolv::DNS::Resource::IN::SRV)
   return resolver.getaddress(record.target), record.port
 end
