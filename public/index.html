@@ -119,42 +119,14 @@
 
   </div>
 
-  <h1>Weather</h1>
-  <div class="liveExample">
-
-    <form data-bind="submit: addCity">
-      Add city:
-      <input data-bind="value: newCityText" placeholder="Enter city name">
-      <button type="submit">Add</button>
-    </form>
-
-    <div data-bind="simpleGrid: citiesGridViewModel"></div>
-
-    <button data-bind="click: sortCitiesByName">
-      Sort by name
-    </button>
-
-    <button data-bind="click: sortCitiesByTemp">
-      Sort by temp
-    </button>
-
-
-    <button data-bind="click: citiesJumpToFirstPage, enable: citiesGridViewModel.currentPageIndex" disabled="">
-      Jump to first page
-    </button>
-
-  </div>
-
   <!-- End your code here -->
 
   <script>
 
-    var PagedGridModel = function(stocks, cities) {
+    var PagedGridModel = function(stocks) {
       var self = this;
       self.stocks = ko.observableArray(stocks);
-      self.cities = ko.observableArray(cities);
       self.newStockText = ko.observable();
-      self.newCityText = ko.observable();
 
       // Operations
       self.addStock = function() {
@@ -198,48 +170,6 @@
         }],
         pageSize: 4
       });
-
-      // Operations
-      self.addCity = function() {
-        // Load initial state from server, convert it to Task instances, then populate self.tasks
-        $.getJSON("/weather/" + this.newCityText(), function(allData) {
-          console.log(allData);
-          self.cities.push(allData);
-          self.newCityText("");
-        });
-      };
-
-      self.sortCitiesByName = function() {
-        self.cities.sort(function(a, b) {
-          return a.city < b.city ? -1 : 1;
-        });
-      };
-
-      self.sortCitiesByTemp = function() {
-        self.cities.sort(function(a, b) {
-          return a.temp < b.temp ? -1 : 1;
-        });
-      };
-
-      self.citiesJumpToFirstPage = function() {
-        self.citiesGridViewModel.currentPageIndex(0);
-      };
-
-      self.citiesGridViewModel = new ko.simpleGrid.viewModel({
-        data: self.cities,
-        columns: [{
-          headerText: "City",
-          rowText: "city"
-        }, {
-          headerText: "Country",
-          rowText: "country"
-        }, {
-          headerText: "Temp",
-          rowText: "temp"
-        }],
-        pageSize: 4
-      });
-
     };
 
     ko.applyBindings(new PagedGridModel([], []));
